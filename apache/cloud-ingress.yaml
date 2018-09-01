@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cloud-ingress
+  namespace: apache-cloud
+spec:
+  rules:
+  - host: $(Your_DomainName) 
+    http:
+      paths:
+      - backend:
+          serviceName: cloud-service
+          servicePort: 80

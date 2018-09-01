@@ -1,0 +1,36 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-1
+spec:
+  capacity:
+    storage: 30Gi
+  accessModes: ["ReadWriteOnce"]
+  hostPath:
+    path: "/mysql-cluster"
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-2
+spec:
+  capacity:
+    storage: 30Gi
+  accessModes: ["ReadWriteOnce"]
+  hostPath:
+    path: "/mysql-cluster"
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-3
+spec:
+  capacity:
+    storage: 30Gi
+  accessModes: ["ReadWriteOnce"]
+  hostPath:
+    path: "/mysql-cluster"
