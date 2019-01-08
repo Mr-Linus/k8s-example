@@ -3,12 +3,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  namespace: mysql
   labels:
-    app: mysql
+    app: mysql-proxy
 spec:
   ports:
   - name: mysql
-    port: 3306
+    protocol: TCP
+    port: 3310
+    targetPort: 3306
   clusterIP: None
   selector:
     app: mysql
@@ -19,12 +22,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-read
+  namespace: mysql
   labels:
     app: mysql
 spec:
+  externalIPs:
+  - 124.116.157.15
   ports:
   - name: mysql
-    port: 3306
+    protocol: TCP
+    port: 3311
+    targetPort: 3306
   selector:
     app: mysql
 

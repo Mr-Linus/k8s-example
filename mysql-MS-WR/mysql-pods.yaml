@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-proxy
+  namespace: mysql
+spec:
+  nodeSelector:
+    type: k8s-m1
+  containers:
+  - name: proxy-tcp
+    image: k8s.gcr.io/proxy-to-service:v2
+    args: [ "tcp", "3306", "mysql-0.mysql" ]
+    ports:
+    - name: tcp
+      protocol: TCP
+      containerPort: 3306
+      hostPort: 3310

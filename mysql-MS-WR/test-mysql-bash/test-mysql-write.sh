@@ -1,10 +1,12 @@
 #!/bin/bash
 
-password=
+password=YourPassword
 
-kubectl run mysql-client --image=mysql:5.7 -i --rm --restart=Never --\
+kubectl run -n mysql  mysql-client --image=mysql:5.7 -i --rm --restart=Never --\
   mysql -h mysql-0.mysql -uroot -p${password} <<EOF
-CREATE DATABASE test;
-CREATE TABLE test.messages (message VARCHAR(250));
-INSERT INTO test.messages VALUES ('hello');
+CREATE TABLE SYSTEMLIB.test (message VARCHAR(250));
+INSERT INTO SYSTEMLIB.test VALUES ('hello');
 EOF
+#CREATE DATABASE test;
+#CREATE TABLE test.messages (message VARCHAR(250));
+#INSERT INTO test.messages VALUES ('hello');

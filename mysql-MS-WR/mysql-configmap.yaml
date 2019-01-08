@@ -2,15 +2,21 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql
+  namespace: mysql
   labels:
     app: mysql
 data:
   master.cnf: |
     # Apply this config only on the master.
     [mysqld]
-    log-bin
+    log-bin=mysqllog
+    skip-name-resolve
+    binlog-do-db=SYSTEMLIB 
   slave.cnf: |
     # Apply this config only on slaves.
     [mysqld]
-    super-read-only
-
+    #super-read-only
+    skip-name-resolve
+    log-bin=mysql-bin
+    replicate-do-db=SYSTEMLIB
+    replicate-ignore-db=mysql 

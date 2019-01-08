@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql
+  namespace: mysql
 spec:
   selector:
     matchLabels:
@@ -147,12 +148,12 @@ spec:
           # Check if we need to complete a clone by starting replication.
           if [[ -f change_master_to.sql.in ]]; then
             echo "Waiting for mysqld to be ready (accepting connections)"
-            until mysql -h 127.0.0.1 -uroot -p${MYSQL_ROOT_PASSWORD} -e "SELECT 1"; do sleep 1; done
+            until mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"; do sleep 1; done
 
             echo "Initializing replication from clone position"
             # In case of container restart, attempt this at-most-once.
             mv change_master_to.sql.in change_master_to.sql.orig
-            mysql -h 127.0.0.1 -uroot -p${MYSQL_ROOT_PASSWORD} <<EOF
+            mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD <<EOF
           $(<change_master_to.sql.orig),
             MASTER_HOST='mysql-0.mysql',
             MASTER_USER='root',

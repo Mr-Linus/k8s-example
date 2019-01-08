@@ -2,6 +2,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-1
+  namespace: mysql
 spec:
   capacity:
     storage: 30Gi
@@ -15,6 +16,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-2
+  namespace: mysql
 spec:
   capacity:
     storage: 30Gi
@@ -28,6 +30,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-3
+  namespace: mysql
 spec:
   capacity:
     storage: 30Gi
