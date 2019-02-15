@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: django
+  namespace: django-cloud
+spec:
+    selector:
+      app: django
+    ports:
+      - name: http
+        protocol: TCP
+        port: 80
+        targetPort: 80
+      - name: http-backend
+        protocol: TCP
+        port: 8000
+        targetPort: 8000

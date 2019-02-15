@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: django-back
+  namespace: django-cloud
+spec:
+  selector:
+    matchLabels:
+      app: django
+  serviceName: django
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: sk
+    spec:
+      containers:
+      - name: dj-backend
+        image: django:backend
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/django
+          name: web-volume
+      volumes:
+      - name: web-volume
+        hostPath:
+          path: /django/django
+          type: Directory
+      - name: conf
+        configMap:
+          name: conf

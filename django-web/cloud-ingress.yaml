@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cloud-ingress
+  namespace: django-cloud
+spec:
+  rules:
+  - host: www.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: django
+          servicePort: 80

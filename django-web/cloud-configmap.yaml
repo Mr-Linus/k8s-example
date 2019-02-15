@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: conf
+  namespace: django-cloud
+  labels:
+    app: django
+data:
+  default.conf: |
+    upstream django {
+        ip_hash;
+        server django-back-0.django:8000 max_fails=5 fail_timeout=60s ; # for a web port socket (we'll use this first)
+        server django-back-1.django:8000 max_fails=5 fail_timeout=60s ;
+    }  
+    server {
+        listen      80;
+        charset     utf-8;
+        client_max_body_size 75M;   # adjust to taste
+        location /static {
+            alias /usr/share/nginx/html/django/static; # your Django project's static files - amend as required
+        }  
+        location / {
+            include     uwsgi_params; # the uwsgi_params file you installed
+            uwsgi_pass  django;
+        }
+    }
