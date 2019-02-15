@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: sk
+        app: django
     spec:
       containers:
       - name: dj-backend
