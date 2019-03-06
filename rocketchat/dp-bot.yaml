@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rc-bot
+  namespace: rc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rc-bot
+    spec:
+      containers:
+      - name: bot
+        image: rocketchat/hubot-rocketchat:latest
+        env:
+          - name: ROCKETCHAT_URL
+            value: rc-web:3000
+          - name: ROCKETCHAT_ROOM
+            value: GENERAL
+          - name: ROCKETCHAT_USER
+            value: bot
+          - name: ROCKETCHAT_PASSWORD
+            value: botpassword
+          - name: BOT_NAME
+            value: bot
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /home/hubot/scripts
+          name: scripts
+      volumes:
+      - name: scripts
+        hostPath:
+          path: /chat/scripts
+          type: Directory

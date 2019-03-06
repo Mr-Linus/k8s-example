@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rc-web
+  namespace: rc
+spec:
+    selector:
+      app: rc-web
+    ports:
+      - name: web
+        protocol: TCP
+        port: 3000
+        targetPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rc-bot
+  namespace: rc
+spec:
+    selector:
+      app: rc-bot
+    ports:
+      - name: web
+        protocol: TCP
+        port: 8080
+        targetPort: 3001
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rc-mongo
+  namespace: rc
+spec:
+    selector:
+      app: rc-mongo
+    ports:
+      - name: mongo
+        protocol: TCP
+        port: 27017
+    clusterIP: None

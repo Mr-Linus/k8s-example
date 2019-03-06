@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rc-ingress
+  namespace: rc
+spec:
+  tls:
+  - hosts:
+    - chat.geekfan.top
+    secretName: secret-tls
+  rules:
+  - host: chat.geekfan.top
+    http:
+      paths:
+      - backend:
+          serviceName: rc-web
+          servicePort: 3000

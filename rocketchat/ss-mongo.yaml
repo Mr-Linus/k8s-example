@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: rc
+spec:
+  serviceName: rc-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rc-mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:3.0
+          securityContext:
+            runAsUser: 0
+          args:
+            - --smallfiles 
+          env:
+          - name: MONGO_OPLOG_URL
+            value: local
+          ports:
+            - containerPort: 27017
+              name: mongo
+          readinessProbe:
+            exec:
+              command: ['mongo', '--eval', 'quit(0)']
+          volumeMounts:
+            - name: mongo-volume
+              mountPath: /data
+      volumes:
+        - name: mongo-volume
+          emptyDir: {}

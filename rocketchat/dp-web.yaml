@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-web
+  namespace: rc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-web
+  template:
+    metadata:
+      labels:
+        app: rc-web
+    spec:
+      containers:
+      - name: web
+        image: rocketchat/rocket.chat:latest
+        env:
+          - name: PORT
+            value: "3000"
+          - name: ROOT_URL
+            value: http://rc-web:3000
+          - name: MONGO_URL
+            value: mongodb://rc-mongo:27017/rocketchat
+          #- name: MONGO_OPLOG_URL
+          #  value: mongodb://rc-mongo:27017/local
+          - name: MAIL_URL
+            value: smtp://smtp.email
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - mountPath: /app/uploads
+          name: uploads
+      volumes:
+      - name: uploads
+        hostPath:
+          path: /chat/uploads
+          type: Directory
