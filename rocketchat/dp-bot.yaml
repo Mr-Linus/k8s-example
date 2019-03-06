@@ -24,6 +24,8 @@ spec:
             value: botpassword
           - name: BOT_NAME
             value: bot
+          - name: EXTERNAL_SCRIPTS
+            value: hubot-help,hubot-seen,hubot-links,hubot-diagnostics
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -34,3 +36,4 @@ spec:
         hostPath:
           path: /chat/scripts
           type: Directory
+      
