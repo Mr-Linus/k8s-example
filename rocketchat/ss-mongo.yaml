@@ -31,6 +31,11 @@ spec:
           volumeMounts:
             - name: mongo-volume
               mountPath: /data
-      volumes:
-        - name: mongo-volume
-          emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-volume
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 50Gi

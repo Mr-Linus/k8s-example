@@ -17,6 +17,8 @@ spec:
       initContainers:
       - name: init-mysql
         image: mysql:5.7
+        securityContext:
+            runAsUser: 0
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -98,7 +100,10 @@ spec:
             memory: 1Gi
         livenessProbe:
           exec:
-            command: ["mysqladmin","-uroot","-p${MYSQL_ROOT_PASSWORD}","ping"]
+            command: 
+            - sh
+            - -c
+            - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
           initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 5
@@ -108,7 +113,7 @@ spec:
             command:
             - sh
             - -c
-            - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
+            - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}" 
           initialDelaySeconds: 5
           periodSeconds: 2
           timeoutSeconds: 1
@@ -157,7 +162,7 @@ spec:
           $(<change_master_to.sql.orig),
             MASTER_HOST='mysql-0.mysql',
             MASTER_USER='root',
-            MASTER_PASSWORD=${MYSQL_ROOT_PASSWORD},
+            MASTER_PASSWORD=$MYSQL_ROOT_PASSWORD,
             MASTER_CONNECT_RETRY=10;
           START SLAVE;
           EOF
@@ -165,7 +170,7 @@ spec:
 
           # Start a server to send backups when requested by peers.
           exec ncat --listen --keep-open --send-only --max-conns=1 3307 -c \
-            "xtrabackup --backup --slave-info --stream=xbstream --host=127.0.0.1 --user=root --password=${MYSQL_ROOT_PASSWORD}"
+            "xtrabackup --backup --slave-info --stream=xbstream --host=127.0.0.1 --user=root --password=$MYSQL_ROOT_PASSWORD"
         volumeMounts:
         - name: data
           mountPath: /var/lib/mysql

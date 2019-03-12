@@ -27,7 +27,7 @@ metadata:
     app: mysql
 spec:
   externalIPs:
-  - 124.116.157.15
+  - yourexternalIP
   ports:
   - name: mysql
     protocol: TCP

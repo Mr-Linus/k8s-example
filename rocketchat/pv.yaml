@@ -1,39 +1,35 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-1
-  namespace: mysql
+  name: mongo-data1
+  namespace: rc
 spec:
   capacity:
-    storage: 30Gi
+    storage: 100Gi
   accessModes: ["ReadWriteOnce"]
   hostPath:
-    path: "/mysql"
-
+    path: "/chat"
 ---
-
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-2
-  namespace: mysql
+  name: mongo-data2
+  namespace: rc
 spec:
   capacity:
-    storage: 30Gi
+    storage: 100Gi
   accessModes: ["ReadWriteOnce"]
   hostPath:
-    path: "/mysql2"
-
+    path: "/chat"
 ---
-
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-3
-  namespace: mysql
+  name: mongo-data3
+  namespace: rc
 spec:
   capacity:
-    storage: 30Gi
+    storage: 100Gi
   accessModes: ["ReadWriteOnce"]
   hostPath:
-    path: "/mysql3"
+    path: "/chat"
