@@ -6,11 +6,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: django
+      app: django-front
   template:
     metadata:
       labels:
-        app: django
+        app: django-front
     spec:
       containers:
       - name: nginx

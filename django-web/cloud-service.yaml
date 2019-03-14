@@ -5,13 +5,24 @@ metadata:
   namespace: django-cloud
 spec:
     selector:
-      app: django
+      app: django-front
     ports:
       - name: http
         protocol: TCP
         port: 80
         targetPort: 80
-      - name: http-backend
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: django-back
+  namespace: django-cloud
+spec:
+    sessionAffinity: ClientIP
+    selector:
+      app: django-back
+    ports:
+      - name: backend
         protocol: TCP
         port: 8000
         targetPort: 8000

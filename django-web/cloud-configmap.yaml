@@ -7,11 +7,6 @@ metadata:
     app: django
 data:
   default.conf: |
-    upstream django {
-        ip_hash;
-        server django-back-0.django:8000 max_fails=5 fail_timeout=60s ; # for a web port socket (we'll use this first)
-        server django-back-1.django:8000 max_fails=5 fail_timeout=60s ;
-    }  
     server {
         listen      80;
         charset     utf-8;
@@ -21,6 +16,6 @@ data:
         }  
         location / {
             include     uwsgi_params; # the uwsgi_params file you installed
-            uwsgi_pass  django;
+            uwsgi_pass  sk-back:8000;
         }
     }
