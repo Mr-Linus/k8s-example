@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - k8s.geekfan.top
+    - dashboard.example.top
     secretName: dashboard-tls
   rules:
-  - host: k8s.geekfan.top
+  - host: dashboard.example.top
     http:
       paths:
       - backend:
