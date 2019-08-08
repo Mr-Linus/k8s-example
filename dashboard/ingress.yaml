@@ -6,7 +6,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/secure-backends: "true"
+    #nginx.ingress.kubernetes.io/secure-backends: "true"  该注释在0.18.0中被弃用，并在0.20.0发布后被删除，使用下面
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   tls:
   - hosts:
